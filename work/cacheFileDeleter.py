@@ -1,6 +1,9 @@
 import os
+import re
+from datetime import datetime
 from datetime import date
 from datetime import timedelta
+import shutil
 
 
 
@@ -17,6 +20,25 @@ def create_folders(rootDir):
 		target += timedelta(days = 1)
 
 
+def dlete_folders(rootdir):
+	now =date.today()
+	td = timedelta(days = 7)
+	pattern = '.*(20\d{2}\-\d{2}\-\d{2})$'
+	fmt = '%Y-%m-%d'
+	dirs = [ dir for dir in os.listdir(rootdir) if os.path.isdir(os.path.join(rootdir, dir))]
+	for dir in dirs:
+		m =re.search(pattern, dir)
+		if m and m.group(1):
+			targetDatetime = datetime.strptime(m.group(1), fmt)
+			targetDate = targetDatetime.date()
+			if targetDate + td <= now:
+				shutil.rmtree(os.path.join(rootdir, dir))
+				print('%s removed' %dir)
+				
+
+
+
 if __name__ == '__main__':
-	create_folders('D:\\work\\test')
+	# create_folders('D:\\work\\test')
+	dlete_folders('D:\\work\\test')
 	
