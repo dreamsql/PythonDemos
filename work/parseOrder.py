@@ -30,7 +30,8 @@ def sort_fun(f):
 
 
 if __name__ == '__main__':
-	getAllSortedFiles('D:\\work\\mic\mylogfile.*')
+	# getAllSortedFiles('D:\\work\\mic\mylogfile.*')
+	# resultFile = 'D:\\work\\mic\result.txt'
 
 	# tree = ET.parse('D:\\work\\mic\\account.txt')
 	# orders = tree.findall('.//Order')
@@ -38,6 +39,8 @@ if __name__ == '__main__':
 	# olist = getOrderSet(orders)
 	# orrs = getOpenOrders(orderRelations)
 	# print('balance = 0 orders count = %d' % len(olist))
+	# for order in olist:
+	# 	print(order)
 	# print('openOrders count = %d' % len(orrs))
 	# openOrderExcluded = 0
 	# for op in orrs:
