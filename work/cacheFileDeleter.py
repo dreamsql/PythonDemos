@@ -4,6 +4,7 @@ from datetime import datetime
 from datetime import date
 from datetime import timedelta
 import shutil
+import sys
 
 
 
@@ -20,7 +21,7 @@ def create_folders(rootDir):
 		target += timedelta(days = 1)
 
 
-def dlete_folders(rootdir):
+def delete_folders(rootdir):
 	now =date.today()
 	td = timedelta(days = 7)
 	pattern = '.*(20\d{2}\-\d{2}\-\d{2})$'
@@ -39,6 +40,6 @@ def dlete_folders(rootdir):
 
 
 if __name__ == '__main__':
-	# create_folders('D:\\work\\test')
-	dlete_folders('D:\\work\\test')
+	dir  = sys.argv[1]
+	delete_folders(dir)
 	
