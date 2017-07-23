@@ -19,8 +19,26 @@ def print_order(fileName):
 
 
 
+def get_duplicate_orders():
+	path = r'D:\work\ws0308\alert.txt'
+	root = ET.parse(path)
+	orders = root.findall('.//Order')
+	item_count = {}
+	for order in orders:
+		id = order.get('ID')
+		if id not in item_count:
+			item_count[id] = 1
+		else:
+			item_count[id] += 1
+	
+	for k, v in item_count.items():
+		# if v > 1:
+		print('id = %s, count = %d' % (k, v))
+
+
 if __name__ == '__main__':
-	print_order('account.txt')
-	print_order('account2.txt')
-	print_order('account3.txt')
-	print_order('account4.txt')
+	get_duplicate_orders()
+	# print_order('account.txt')
+	# print_order('account2.txt')
+	# print_order('account3.txt')
+	# print_order('account4.txt')
