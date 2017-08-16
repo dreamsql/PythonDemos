@@ -6,7 +6,7 @@ def get_order_attr(root):
 	nodes = root.findall('.//Order')
 	result = []
 	for node in nodes:
-		item = 'id = %s, code = %s ,isOpen = %s, isBuy = %s, tradePLFloat = %s, lotBalance = %s' % (node.get('ID'), node.get('Code'), node.get('IsOpen'), node.get('IsBuy'), node.get('TradePLFloat'),node.get('LotBalance'))
+		item = 'code = %s ,isOpen = %s, isBuy = %s, tradePLFloat = %s, livePrice = %s' % ( node.get('Code'), node.get('IsOpen'), node.get('IsBuy'), node.get('TradePLFloat'),node.get('LivePrice'))
 		result.append(item)
 	return result
 
@@ -37,8 +37,7 @@ def get_duplicate_orders():
 
 
 if __name__ == '__main__':
-	get_duplicate_orders()
-	# print_order('account.txt')
+	 print_order(r'D:\work\no001.txt')
 	# print_order('account2.txt')
 	# print_order('account3.txt')
 	# print_order('account4.txt')

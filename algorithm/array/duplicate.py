@@ -21,8 +21,9 @@ def get_missing_item_from_sorted_array(a):
 				diff = a[j] - a[i]
 				if diff != 1:
 					return a[i] + 1
-		return None
+		return a[-1] + 1
 
 if __name__ == '__main__':
 	print(get_missing_item_from_sorted_array([1, 2, 5, 6]))
 	print(get_missing_item_from_sorted_array([0,1, 2, 5, 6]))
+	print(get_missing_item_from_sorted_array([0,1, 2,3,4, 5, 6]))
