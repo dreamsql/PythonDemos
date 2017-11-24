@@ -1,0 +1,109 @@
+import socket, ssl, pprint
+import xml.etree.ElementTree as ET
+import struct
+
+def build_content():
+    root = ET.Element("Request")
+    args = ET.SubElement(root, "Arguments")
+    method_node = ET.SubElement(root, 'Method')
+    method_node.text = 'Login'
+    # userId_arg = ET.Element("arg")
+    # userId_arg.text = '330ECF7C-5154-42F9-8DE6-5A09E08856DA'
+    loginId_arg = create_arg('map002')
+    password_arg = create_arg('12345678')
+    version_arg = create_arg('1.2.7')
+    appType_arg = create_arg('7')
+    args.extend([loginId_arg, password_arg, version_arg, appType_arg])
+    return ET.tostring(root, encoding='utf-8', method='xml')
+
+def create_arg(value):
+    node = ET.Element('arg')
+    node.text = value
+    return node
+
+def get_customer_int_bytes(length):
+    packet = bytearray(length)
+    mask_values = 0xff
+    packet[0]= length & mask_values
+    packet[1] = (length >> 8) & mask_values
+    packet[2] = (length >> 16) & mask_values
+    packet[3] = (length >> 24) & mask_values
+    return packet
+
+def to_customer_int(packet):
+    result = 0
+    for i in range(len(packet)):
+        result = result + (packet[i] << i * 8)
+    return result
+
+
+
+def build_packet(content):
+    head_length = 6
+    packet_length = head_length + len(content)
+    packet = bytearray(packet_length)
+    content_length_bytes = get_customer_int_bytes(len(content))
+    packet[2: 2 + len(content_length_bytes)] = content_length_bytes
+    packet[head_length:] = content
+    return packet
+
+def build_packet_new_protocol(content):
+    business_head_length = 8
+    network_head_length = 6
+    business_packet_length = business_head_length + len(content)
+    packet_length = network_head_length + business_packet_length
+    packet = bytearray(packet_length)
+    content_length_bytes = get_customer_int_bytes(len(content))
+    business_packet_length_bytes = get_customer_int_bytes(business_packet_length)
+    packet[0] = 0x80
+    packet[2:6]=business_packet_length_bytes
+    packet[network_head_length+1] = 0x20
+    content_length_offset = network_head_length + 4
+    packet[content_length_offset: content_length_offset + 4] = content_length_bytes
+    packet[network_head_length + business_head_length:] = content
+    return packet
+
+
+
+def parse_packet(packet):
+    session_length = struct.unpack('b', packet[1])[0]
+    print(session_length)
+    content = packet[6+session_length:]
+    session = packet[6: 6+ session_length]
+    print(session)
+    print(content)
+
+def parse_packet_new_protocol(packet):
+    content_bytes = bytearray(4)
+    j = 0
+    for i in range(2,6):
+        content_bytes[j] = struct.unpack('b', packet[i])[0]
+        j = j+ 1
+    content_length = to_customer_int(content_bytes)
+    session_length = struct.unpack('b', packet[6+2])[0]
+    invoke_id_length = struct.unpack('b', packet[6+3])[0]
+    print(session_length)
+    print(content_length)
+    print(invoke_id_length)
+    print(packet[6+8+session_length + invoke_id_length:])
+    
+
+
+
+if __name__ == '__main__':
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    ssl_socket = ssl.wrap_socket(s)
+    ssl_socket.connect(("ws3193", 9000))
+    content = build_content()
+    packet = build_packet(content)
+    ssl_socket.write(packet)
+    response = ssl_socket.read()
+    parse_packet(response)
+    ssl_socket.close()
+
+
+
+
+
+
+
