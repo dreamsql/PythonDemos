@@ -20,7 +20,7 @@ def parseTradingAccountVersionData(id, file):
 
 def getAllFIlesAndSort(p):
     result = glob.glob(p)
-    result.sort(key = sort_handle,reverse=True)
+    # result.sort(key = sort_handle,reverse=True)
     return result
 
 def sort_handle(filePath):
@@ -43,7 +43,7 @@ if __name__  == '__main__':
     #         if m:
     #             print(line)
 
-    files = getAllFIlesAndSort('D:\work\geg\*.txt*')
+    files = getAllFIlesAndSort('//ws0308/iexchange/TransactionService/Logs/*.txt*')
     id = '05db37a0-99c8-4124-9c1d-10a45dc3deaf'
     for file in files:
        print(file)

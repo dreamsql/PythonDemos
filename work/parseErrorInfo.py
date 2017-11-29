@@ -19,8 +19,6 @@ def filter_log_with_directory(pattern, dirPath, isReverse = False ,fileCount = N
 		filterLog(pattern,os.path.join(dirPath, f))
 
 
-
-
 	
 def getAllSortedFiles(pattern,isreverse):
 	repa = 'mylogfile\.txt\.?(\d+)?'
@@ -58,8 +56,8 @@ def filter_by_logLevel(level, dirPath,reverse= False,filecount = None):
 if __name__ == '__main__':
 	filePath = 'D:\\work\\mic\\20170512\\mylogfile.txt'
 	ws0308_path = '//ws0308/iexchange/TransactionService/Logs/mylogfile.txt'
-	ws0308_dir = '//ws0308/iexchange/TransactionService/Logs/mylogfile.*'
-	filter_by_logLevel(LogLevel.Error,ws0308_dir,filecount = 2)
+	ws0308_dir = '//ws0308/Products/iexchange/TransactionService/Logs/mylogfile.*'
+	filter_by_logLevel(LogLevel.Error,ws0308_dir)
 
 
 
