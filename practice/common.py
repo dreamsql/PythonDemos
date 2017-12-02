@@ -10,7 +10,7 @@ from heapq       import heappop, heappush
 
 def Input(day):
     "Open this day's input file."
-    filename = 'advent2016/input{}.txt'.format(day)
+    filename = r'D:\Programming\openSource\pytudes-master\pytudes-master\data\advent2016\input{}.txt'.format(day)
     try:
         return open(filename)
     except FileNotFoundError:
