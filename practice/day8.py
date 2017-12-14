@@ -25,7 +25,11 @@ def run(commands, screen):
 screen = run(Input(8), Screen())
 print(np.sum(screen))
 for row in screen:
-    print(cat(' @'[pixel] for pixel in row))
+    # print(cat(' @'[pixel] for pixel in row))
+    #  print([' @'[pixel] for pixel in row])
+    # print([[pixel] for pixel in row])
+    print(cat( ' @' if pixel == 1 else '  ' for pixel in row))
+
 
 # a = np.zeros((6,6), dtype=int)
 

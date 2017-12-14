@@ -16,12 +16,14 @@ def filter_log_with_directory(pattern, dirPath, isReverse = False ,fileCount = N
 	for f in files:
 		count -= 1
 		if count < 0: break
-		filterLog(pattern,os.path.join(dirPath, f))
+		filepath = os.path.join(dirPath, f)
+		print("path = %s, fileName = %s" % (filepath, f))
+		filterLog(pattern,filepath)
 
 
 	
 def getAllSortedFiles(pattern,isreverse):
-	repa = 'mylogfile\.txt\.?(\d+)?'
+	# repa = 'mylogfile\.txt\.?(\d+)?'
 	files = glob.glob(pattern)
 	files.sort(key = sort_fun,reverse=isreverse)
 	return files
@@ -29,7 +31,7 @@ def getAllSortedFiles(pattern,isreverse):
 def sort_fun(f):
 	repa = 'mylogfile\.txt\.?(\d+)?'
 	m = re.search(repa,f.strip())
-	return int(m.group(1) or 0)
+	return int((m and m.group(1)) or 0)
 
 
 def filterLog(pattern, filePath):
@@ -54,10 +56,12 @@ def filter_by_logLevel(level, dirPath,reverse= False,filecount = None):
 
 
 if __name__ == '__main__':
-	filePath = 'D:\\work\\mic\\20170512\\mylogfile.txt'
-	ws0308_path = '//ws0308/iexchange/TransactionService/Logs/mylogfile.txt'
-	ws0308_dir = '//ws0308/Products/iexchange/TransactionService/Logs/mylogfile.*'
-	filter_by_logLevel(LogLevel.Error,ws0308_dir)
+	filePath = r'D:\work\bdl\mylogs'
+	# ws0308_path = '//ws0308/iexchange/TransactionService/Logs/mylogfile.txt'
+	# ws0308_dir = '//ws0308/Products/iexchange/TransactionService/Logs/mylogfile.*'
+	# filter_by_logLevel(LogLevel.Error,ws0308_dir)
+	filter_log_with_directory('7DCA6646-2404-45E8-B847-BF27C0B708B1', filePath)
+
 
 
 
