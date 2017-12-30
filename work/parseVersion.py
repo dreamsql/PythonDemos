@@ -4,6 +4,7 @@
 import re
 import glob
 import os
+import sys
 
 
 
@@ -29,27 +30,31 @@ def sort_handle(filePath):
     return 0 if len(items) == 2 else int(items[2])
     
 
-def grep(filepath, pattern):
+def grep(filepath, pattern, logfile):
     with open(filepath) as f :
         for line in f :
             m = re.search(pattern, line,re.IGNORECASE)
             if m:
                 print(line)
+                logfile.write(line)
 
 
 if __name__  == '__main__':
-
-    # IncreaseVersion accountId = c3ba8fd0-59fd-4e9e-8d99-2199ac10c3c7, oldVersion = 303, newVersion = 304,accountBalance = 83113.10
-    # pattern = 'IncreaseVersion accountId = c3ba8fd0-59fd-4e9e-8d99-2199ac10c3c7'
-    # path = 'D:\work\geg\mylogfile.txt'
-
-    # with open(path) as f :
-    #     for line in f :
-    #         m = re.search(pattern, line)
-    #         if m:
-    #             print(line)
-
-    files = getAllFIlesAndSort(r'D:\work\bdl\mylogs\*.txt*')
-    id = '0DDD429E-3366-40CA-A310-259688E521BC'
-    for file in files:
-       grep(file, id)
+    dirs = {
+    "ws3191": r"//ws3191\Products\iExchange\TransactionService",
+    "ws3193":r"//ws3193\iExchange\TransactionService",
+    'ws3195':r'//ws3195\Products\iExchange\TransactionService',
+    }
+    server = sys.argv[1]
+    files = getAllFIlesAndSort(r'%s\Logs/*.txt*' % dirs[server])
+    if(len(sys.argv) < 3):
+        print("please input grep pattern!")
+    else:        
+        id = sys.argv[2]
+        print(id)
+        print(len(files))
+        with open("mylog.txt", 'w') as logfile:
+            for file in files:
+                grep(file, id,logfile)
+        # # for file in files:
+    #     print(file)
