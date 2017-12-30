@@ -12,36 +12,50 @@ app_map = {
 }
 
 debug = 'bin\Debug'
+release = 'bin\Release'
 
+
+def parse_modes(args):
+    modes = dict()
+    for v in args:
+        if v.startswith('-'):
+            items = v.split('=')
+            modes[items[0][1:]] = items[1]
+    return modes
+    
 
 
 if __name__ == '__main__':
-    source_root = r'D:\Teams\iExchangeCollection\iExchange3 Team\iExchange3Promotion'
-    target_root = r'D:\work\test'
-    if len(sys.argv) < 2:
-        raise ValueError('should input app name')
-    
+    sourceRoot = r'D:\Teams\iExchangeCollection\iExchange3 Team\iExchange3Promotion'
+    targetRoot = r'D:\work\test'
+
     now = date.today()
-    target_dir = now.strftime('%Y-%m-%d')
+    targetDir = now.strftime('%Y-%m-%d')
 
-    appname =app_map[sys.argv[1]]
+    modes = parse_modes(sys.argv)
 
-    target_dir = os.path.join(target_root,target_dir,appname)
-    if not os.path.exists(target_dir):
-        os.makedirs(target_dir, exist_ok=True)
+    appname =app_map[modes['app']]
     
-    source_dir = os.path.join(source_root, appname,debug)
+    build_type = modes['build']
+    isDebug = True if build_type == 'd' or build_type == 'debug' else False
+
+    targetDir = os.path.join(targetRoot,targetDir,appname)
+    if not os.path.exists(targetDir):
+        os.makedirs(targetDir, exist_ok=True)
     
-    file_names = ['Core', 'Protocal']
+    fileDir = debug if isDebug else release
+    sourceDir = os.path.join(sourceRoot, appname,fileDir)
+    
+    fileNames = ['Core', 'Protocal']
 
     # shutil.copyfile()
 
-    for name in file_names:
+    for name in fileNames:
         join = os.path.join
         file1 = name + '.pdb'
         file2 = name + '.dll'
-        shutil.copy2(join(source_dir, file1), join(target_dir, file1))
-        shutil.copy2(join(source_dir, file2), join(target_dir, file2))
+        shutil.copy2(join(sourceDir, file1), join(targetDir, file1))
+        shutil.copy2(join(sourceDir, file2), join(targetDir, file2))
 
     print('done')
     
