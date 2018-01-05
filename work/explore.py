@@ -9,7 +9,10 @@ dirs = {
     'ws3195':r'\\ws3195\Products\iExchange\TransactionService',
     "z": r"Z:\Common\SwapFiles\Robert",
     "server": r'D:\work\outterServerLoginInfo\name.txt',
-    "dump":r"D:\iExchange\DumpTool"
+    "dump":r"D:\iExchange\DumpTool",
+    'pro': r'D:\Teams\iExchangeCollection\iExchange3 Team\iExchange3Promotion\Protocal\bin\Debug',
+    'ws0308':r'\\ws0308\Products\iExchange\TransactionService'
+
 }
 
 

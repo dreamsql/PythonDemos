@@ -44,6 +44,9 @@ if __name__  == '__main__':
     "ws3191": r"//ws3191\Products\iExchange\TransactionService",
     "ws3193":r"//ws3193\iExchange\TransactionService",
     'ws3195':r'//ws3195\Products\iExchange\TransactionService',
+     'ws0308':r'\\ws0308\Products\iExchange\TransactionService',
+     'z8':r'Z:\Common\SwapFiles\Robert\0308'
+
     }
     server = sys.argv[1]
     files = getAllFIlesAndSort(r'%s\Logs/*.txt*' % dirs[server])
@@ -51,10 +54,10 @@ if __name__  == '__main__':
         print("please input grep pattern!")
     else:        
         id = sys.argv[2]
-        print(id)
+        count = len(files)
+        file_count = int(sys.argv[3]) if len(sys.argv) > 3 else count
+        files = files[count - file_count: count]
         print(len(files))
         with open("mylog.txt", 'w') as logfile:
             for file in files:
                 grep(file, id,logfile)
-        # # for file in files:
-    #     print(file)

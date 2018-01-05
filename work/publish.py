@@ -6,7 +6,7 @@ import shutil
 
 
 app_map = {
-    'ts':'TransactionService',
+    'ts':'Core',
     'gw': 'Gateway',
     'ss': 'StateServer'
 }
