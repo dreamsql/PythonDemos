@@ -12,4 +12,5 @@ Belief = frozenset
 all_coins = Belief(map(Coins, product('HT', repeat=4)))
 
 
-print(all_coins)
+def rotations(coins)  -> [Coins]:
+    return [coins[r:] + coins[:r] for r in range(4)]

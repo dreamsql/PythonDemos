@@ -1,0 +1,18 @@
+language: python
+
+python:
+    - "3.5"
+    - "3.6"
+
+install:
+    - pip install -e .[tests,datetime]
+
+script:
+    - pytest -v --cov=bplustree tests/
+    - pycodestyle bplustree tests
+
+after_success:
+  - coveralls
+
+notifications:
+    email: false

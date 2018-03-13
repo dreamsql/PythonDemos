@@ -33,8 +33,16 @@ if __name__ == '__main__':
 	# getAllSortedFiles('D:\\work\\mic\mylogfile.*')
 	# resultFile = 'D:\\work\\mic\result.txt'
 
-	# tree = ET.parse('D:\\work\\mic\\account.txt')
-	# orders = tree.findall('.//Order')
+	tree = ET.parse('D:\\work\\mic\\account.txt')
+	orders = tree.findall('.//Order')
+
+	result = 0
+	for o in orders:
+		plFloat = float(o.get('TradePLFloat'))
+		print(plFloat)
+		result += plFloat
+	print("result = {}".format(result))
+
 	# orderRelations = tree.findall('.//OrderRelation')
 	# olist = getOrderSet(orders)
 	# orrs = getOpenOrders(orderRelations)

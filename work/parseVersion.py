@@ -43,9 +43,14 @@ if __name__  == '__main__':
     dirs = {
     "ws3191": r"//ws3191\Products\iExchange\TransactionService",
     "ws3193":r"//ws3193\iExchange\TransactionService",
-    'ws3195':r'//ws3195\Products\iExchange\TransactionService',
+    'ws3195':r'//ws3195\iExchange\TransactionService',
      'ws0308':r'\\ws0308\Products\iExchange\TransactionService',
-     'z8':r'Z:\Common\SwapFiles\Robert\0308'
+     'z8':r'Z:\Common\SwapFiles\Robert\0308',
+     '0308gw':r'\\ws0308\Products\iExchange\Gateway',
+     'test':r'D:\work\test',
+     'cli':r'D:\work\cli',
+     'gdx':r'D:\work\gdx',
+     'mic':r'D:\work\mic'
 
     }
     server = sys.argv[1]
