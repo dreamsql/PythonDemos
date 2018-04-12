@@ -6,7 +6,7 @@ import os
 dirs = {
     "ws3191": r"\\ws3191\Products\iExchange\TransactionService",
     "ws3193":r"\\ws3193\iExchange\TransactionService",
-    'ws3195':r'\\ws3195\Products\iExchange\TransactionService',
+    'ws3195':r'\\ws3195\iExchange\TransactionService',
     "z": r"Z:\Common\SwapFiles\Robert",
     "server": r'D:\work\outterServerLoginInfo\name.txt',
     "dump":r"D:\iExchange\DumpTool",

@@ -1,9 +1,12 @@
 import xml.etree.ElementTree as ET
 import os
+import re
 
 from collections import namedtuple
 
 OrderInfo = namedtuple('OrderInfo', "id, isbuy, isopen, phase, lotBalance, instruomentId")
+
+import pyodbc
 
 
 def get_order_attr(root):
@@ -36,6 +39,35 @@ def print_order(fileName):
     result = get_order_attr(root)
     for item in result:
         print(item)
+    
+def parse_reset_accounts():
+    root = ET.parse(r'D:\account.txt')
+    accounts = root.findall('.//Account')
+    result = set()
+    for account in accounts:
+        id = account.get('ID')
+        if id not in result:
+            result.add(id)
+        else:
+            print('account id={} already exists'.format(id))
+        parse_account_order(account)
+    
+def parse_account_order(account):
+    result = set()
+    orders = account.findall('.//Order')
+    for order in orders:
+        id = order.get('ID')
+        if id not in result:
+            result.add(id)
+        else:
+            print('order id = {} already exists'.format(id))
+
+
+    
+  
+        
+    
+
 
 
 
@@ -57,7 +89,31 @@ def get_duplicate_orders():
 
 
 if __name__ == '__main__':
-     print_order(r'account.txt')
+    #  print_order(r'account.txt')
     # print_order('account2.txt')
     # print_order('account3.txt')
     # print_order('account4.txt')
+    # parse_reset_accounts()
+    conn = pyodbc.connect(
+        r'DRIVER={SQL Server Native Client 10.0};'
+        r'SERVER=ws3195;'
+        r'DATABASE=iExchange_V3;'
+        r'UID=sa;'
+        r'PWD=Omni1234'
+    )
+    cursor = conn.cursor()
+    cursor.execute("SELECT MIN(ID), Max(ID) FROM Trading.SaveResetStatus_Xml WHERE [Time] >= '{}'".format('2018-04-11'))
+    items = [item for item in cursor]
+    minID = int(items[0][0])
+    maxID = int(items[0][1])
+    pattern = '3619771f-3c0c-4fd8-9c1b-de8c2e840891'
+    while minID <= maxID:
+        cursor.execute("SELECT ResetData FROM Trading.SaveResetStatus_Xml WHERE ID = '{}'".format(minID))
+        for m in cursor:
+            content = m[0]
+            # print(content)
+            if re.search(pattern, content):
+                print(content)
+        minID += 1
+    
+            
